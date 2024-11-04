@@ -1,27 +1,25 @@
 package com.pontoapp.pontoapp.entity;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-public class UserDatailsImpl implements UserDetails {
+public class UserDetailsImpl implements UserDetails {
 
     private final Long id;
 
-    private final String name;
-
-    private final String email;
+    private final String login;
 
     private String password;
 
     private final Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl(Long id, String name, String email, String password, Collection<? extends GrantedAuthority> authorities) {
-        // super();
+    public UserDetailsImpl(Long id, String login, String password, Collection<? extends GrantedAuthority> authorities) {
+        super();
         this.id = id;
-        this.name = name;
-        this.email = email;
+        this.login = login;
         this.password = password;
         this.authorities = authorities;
     }
@@ -30,8 +28,7 @@ public class UserDatailsImpl implements UserDetails {
 
         return new UserDetailsImpl(
                 user.getId(),
-                user.getName(),
-                user.getEmail(),
+                user.getLogin(),
                 user.getPassword(),
                 new ArrayList<>());
     }
@@ -46,10 +43,6 @@ public class UserDatailsImpl implements UserDetails {
         return password;
     }
 
-    @Override
-    public String getUsername() {
-        return email;
-    }
 
     @Override
     public boolean isAccountNonExpired() {
@@ -69,6 +62,48 @@ public class UserDatailsImpl implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        super.finalize();
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
+
+    @Override
+    public String getUsername() {
+        return getLogin();
     }
 
 }
