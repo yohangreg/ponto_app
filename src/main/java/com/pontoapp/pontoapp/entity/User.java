@@ -28,6 +28,8 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Timesheet> timesheet;
 
+    
+
     public Long getId() {
         return id;
     }
