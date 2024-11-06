@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pontoapp.pontoapp.dto.AcessDTO;
+import com.pontoapp.pontoapp.dto.AuthenticationDTO;
 import com.pontoapp.pontoapp.dto.NewUserDTO;
 import com.pontoapp.pontoapp.service.AuthService;
 import com.pontoapp.pontoapp.service.UserService;
@@ -36,4 +38,15 @@ public class AuthController {
         }
     }
 
+    @PostMapping(value = "/login")
+    public ResponseEntity<?> login(@RequestBody AuthenticationDTO authDto) {
+        try {
+            AcessDTO token = authService.login(authDto);
+            return ResponseEntity.status(HttpStatus.OK).body(token);
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage() + " " + ex.getCause());
+        } catch (RuntimeException ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage() + " " + ex.getCause());
+        }
+    }
 }
