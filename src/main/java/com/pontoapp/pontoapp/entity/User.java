@@ -2,6 +2,11 @@ package com.pontoapp.pontoapp.entity;
 
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
+
+import com.pontoapp.pontoapp.dto.NewUserDTO;
+import com.pontoapp.pontoapp.dto.UserDTO;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -28,7 +33,13 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Timesheet> timesheet;
 
+    public User(UserDTO userDto) {
+        BeanUtils.copyProperties(userDto, this);
+    }
     
+    public User(NewUserDTO userDto) {
+        BeanUtils.copyProperties(userDto, this);
+    }
 
     public Long getId() {
         return id;

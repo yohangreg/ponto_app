@@ -5,8 +5,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.pontoapp.pontoapp.dto.NewUserDTO;
-import com.pontoapp.pontoapp.dto.UserDTO;
 import com.pontoapp.pontoapp.entity.User;
+import com.pontoapp.pontoapp.exceptions.UserServiceException;
 import com.repository.UserRepository;
 
 @Service
@@ -25,7 +25,7 @@ public class UserService {
             User user = new User(userDTO);
             user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
             user.setId(null);
-            User savedUser = userRepository.save(user);
+            userRepository.save(user);
         } catch (Exception e) {
             throw new UserServiceException("Erro ao criar novo usuário", e);
         }
