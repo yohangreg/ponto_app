@@ -10,6 +10,6 @@ import com.pontoapp.pontoapp.entity.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>{
 
-    Optional<User> findByLogin(String login);
+    Optional<User> findByLogin(String login);   
 
 }

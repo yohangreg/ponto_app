@@ -26,7 +26,7 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
-    @PostMapping(value = "singUp")
+    @PostMapping(value = "/singUp")
     public ResponseEntity<?> insertNewUser(@RequestBody NewUserDTO newUser) {
         try {
             userService.insert(newUser);
