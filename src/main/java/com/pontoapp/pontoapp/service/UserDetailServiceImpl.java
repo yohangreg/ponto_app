@@ -8,17 +8,17 @@ import org.springframework.stereotype.Service;
 
 import com.pontoapp.pontoapp.entity.User;
 import com.pontoapp.pontoapp.entity.UserDetailsImpl;
-import com.repository.UserRepository;
+import com.pontoapp.repository.UserRepository;
 
 @Service
 public class UserDetailServiceImpl implements UserDetailsService{
 
     @Autowired
-    private UserRepository UserRepository;
+    private UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        User user = UserRepository.findByLogin(login).get();
+        User user = userRepository.findByLogin(login).get();
         return UserDetailsImpl.build(user);
     }
 }

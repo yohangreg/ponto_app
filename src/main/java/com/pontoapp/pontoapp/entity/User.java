@@ -41,6 +41,16 @@ public class User {
         BeanUtils.copyProperties(userDto, this);
     }
 
+    public User() {
+    }
+
+    public User(Long id, String login, String password, List<Timesheet> timesheet) {
+        this.id = id;
+        this.login = login;
+        this.password = password;
+        this.timesheet = timesheet;
+    }
+
     public Long getId() {
         return id;
     }

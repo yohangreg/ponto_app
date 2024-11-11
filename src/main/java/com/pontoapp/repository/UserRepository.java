@@ -1,4 +1,4 @@
-package com.repository;
+package com.pontoapp.repository;
 
 import java.util.Optional;
 
