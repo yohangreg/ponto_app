@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.pontoapp.pontoapp.entity.User;
 import com.pontoapp.pontoapp.entity.UserDetailsImpl;
-import com.pontoapp.repository.UserRepository;
+import com.pontoapp.pontoapp.repository.UserRepository;
 
 @Service
 public class UserDetailServiceImpl implements UserDetailsService{

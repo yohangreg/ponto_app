@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import com.pontoapp.pontoapp.dto.NewUserDTO;
 import com.pontoapp.pontoapp.entity.User;
 import com.pontoapp.pontoapp.exceptions.UserServiceException;
-import com.pontoapp.repository.UserRepository;
+import com.pontoapp.pontoapp.repository.UserRepository;
 
 @Service
 public class UserService {
