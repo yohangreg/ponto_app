@@ -11,6 +11,6 @@ import com.pontoapp.pontoapp.entity.User;
 @Repository
 public interface TimesheetRepository extends JpaRepository<Timesheet, Long> {
 
-    Optional<Timesheet> fingByUser(User user);
+    Optional<Timesheet> findByUser(User user);
     
 }
