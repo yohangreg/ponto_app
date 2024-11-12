@@ -29,6 +29,9 @@ public class Timesheet {
     @Temporal(TemporalType.TIME)
     private Date dot;
 
+    @Column(name = "Timeflag", nullable = false)
+    private Integer timeflag;
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
@@ -62,5 +65,13 @@ public class Timesheet {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Integer getTimeflag() {
+        return timeflag;
+    }
+
+    public void setTimeflag(Integer timeflag) {
+        this.timeflag = timeflag;
     }
 }
