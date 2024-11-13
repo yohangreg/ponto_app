@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.pontoapp.pontoapp.dto.NewUserDTO;
+import com.pontoapp.pontoapp.dto.UpdateUserDTO;
 import com.pontoapp.pontoapp.dto.UserDTO;
 import com.pontoapp.pontoapp.exceptions.UserServiceException;
 import com.pontoapp.pontoapp.service.UserService;
@@ -40,7 +40,7 @@ public class UserController {
     }
 
     @PutMapping
-    public ResponseEntity<?> updateUser(@RequestBody NewUserDTO userDTO) {
+    public ResponseEntity<?> updateUser(@RequestBody UpdateUserDTO userDTO) {
         try {
             UserDTO userUpdated = userService.update(userDTO);
             return ResponseEntity.status(HttpStatus.OK).body(userUpdated);

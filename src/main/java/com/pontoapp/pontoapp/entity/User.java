@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.BeanUtils;
 
 import com.pontoapp.pontoapp.dto.NewUserDTO;
+import com.pontoapp.pontoapp.dto.UpdateUserDTO;
 import com.pontoapp.pontoapp.dto.UserDTO;
 
 import jakarta.persistence.CascadeType;
@@ -38,6 +39,10 @@ public class User {
     }
     
     public User(NewUserDTO userDto) {
+        BeanUtils.copyProperties(userDto, this);
+    }
+
+    public User(UpdateUserDTO userDto) {
         BeanUtils.copyProperties(userDto, this);
     }
 

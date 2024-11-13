@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.pontoapp.pontoapp.dto.NewUserDTO;
+import com.pontoapp.pontoapp.dto.UpdateUserDTO;
 import com.pontoapp.pontoapp.dto.UserDTO;
 import com.pontoapp.pontoapp.entity.User;
 import com.pontoapp.pontoapp.exceptions.UserServiceException;
@@ -35,11 +36,11 @@ public class UserService {
         }
     }
 
-    public UserDTO update(NewUserDTO userDTO) {
+    public UserDTO update(UpdateUserDTO userDTO) {
         try {
-            User existingUser = userRepository.findByLogin(userDTO.getLogin()).get();
+            User existingUser = userRepository.findById(userDTO.getId()).get();
             if (existingUser == null) {
-                throw new UserServiceException("Usuário não encontrado para o login fornecido: " + userDTO.getLogin());
+                throw new UserServiceException("Usuário não encontrado para o id fornecido: " + userDTO.getId());
             }
 
             // Atualiza os campos do usuário com os valores do DTO, exceto a senha
