@@ -14,7 +14,7 @@ import com.pontoapp.pontoapp.service.AuthorizationService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("api/auth")
+@RequestMapping("/api/auth")
 public class AuthController {
    
     @Autowired
