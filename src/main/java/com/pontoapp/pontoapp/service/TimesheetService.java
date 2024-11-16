@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pontoapp.pontoapp.dto.InsertTimesheetDTO;
 import com.pontoapp.pontoapp.dto.TimesheetDTO;
 import com.pontoapp.pontoapp.entity.Timesheet;
 import com.pontoapp.pontoapp.entity.User;
@@ -23,15 +24,17 @@ public class TimesheetService {
     @Autowired
     private UserRepository userRepository;
 
-    public void insert(TimesheetDTO dto) {
+    public void insert(InsertTimesheetDTO dto) {
         try {
-            Optional<User> userOp = userRepository.findById(dto.getUser_id());
+            Optional<User> userOp = userRepository.findById(dto.userId());
             if(!userOp.isPresent()) {
-                throw new UserServiceException("Usuário não encontrado para o id fornecido: " + dto.getUser_id());
+                throw new UserServiceException("Usuário não encontrado para o id fornecido: " + dto.userId());
             }
-            Timesheet timesheet = new Timesheet(dto);
+            Timesheet timesheet = new Timesheet();
             timesheet.setId(null);
             timesheet.setUser(userOp.get());
+            timesheet.setDot(dto.dot());
+            timesheet.setTimeflag(dto.timeflag());
             timesheetRepository.save(timesheet);
         } catch (RuntimeException e) {
             throw new RuntimeException("Failed to create timesheet", e);

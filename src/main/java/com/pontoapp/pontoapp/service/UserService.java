@@ -1,6 +1,7 @@
 package com.pontoapp.pontoapp.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,17 +39,19 @@ public class UserService {
 
     public UserDTO update(UpdateUserDTO userDTO) {
         try {
-            User existingUser = userRepository.findById(userDTO.getId()).get();
-            if (existingUser == null) {
+            Optional<User> existingUser = userRepository.findById(userDTO.getId());
+            if (!existingUser.isPresent()) {
                 throw new UserServiceException("Usuário não encontrado para o id fornecido: " + userDTO.getId());
             }
 
+            User updatedUser = existingUser.get();
+
             // Atualiza os campos do usuário com os valores do DTO, exceto a senha
-            existingUser.setLogin(userDTO.getLogin());
-            existingUser.setPassword(userDTO.getPassword());
+            updatedUser.setLogin(userDTO.getLogin());
+            updatedUser.setPassword(userDTO.getPassword());
 
             // Salva as alterações no usuário
-            User updatedUser = userRepository.save(existingUser);
+            updatedUser = userRepository.save(updatedUser);
 
             // Retorna uma visualização do usuário atualizado
             return new UserDTO(updatedUser);

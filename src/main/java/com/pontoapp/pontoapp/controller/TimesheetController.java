@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pontoapp.pontoapp.dto.InsertTimesheetDTO;
 import com.pontoapp.pontoapp.dto.TimesheetDTO;
 import com.pontoapp.pontoapp.service.TimesheetService;
 
@@ -25,7 +26,7 @@ public class TimesheetController {
     private TimesheetService timesheetService;
 
     @PostMapping(value = "/insert")
-    public ResponseEntity<?> insert(@RequestBody TimesheetDTO timesheetsDto) {
+    public ResponseEntity<Object> insert(@RequestBody InsertTimesheetDTO timesheetsDto) {
         try {
             timesheetService.insert(timesheetsDto);
             return ResponseEntity.status(HttpStatus.CREATED).body("Novo usuário criado!");

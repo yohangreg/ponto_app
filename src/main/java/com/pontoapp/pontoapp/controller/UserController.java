@@ -33,7 +33,7 @@ public class UserController {
     }
 
     @PutMapping
-    public ResponseEntity<?> updateUser(@RequestBody UpdateUserDTO userDTO) {
+    public ResponseEntity<Object> updateUser(@RequestBody UpdateUserDTO userDTO) {
         try {
             UserDTO userUpdated = userService.update(userDTO);
             return ResponseEntity.status(HttpStatus.OK).body(userUpdated);

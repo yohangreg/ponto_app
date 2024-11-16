@@ -4,6 +4,7 @@ import java.util.Date;
 
 import org.springframework.beans.BeanUtils;
 
+import com.pontoapp.pontoapp.dto.InsertTimesheetDTO;
 import com.pontoapp.pontoapp.dto.TimesheetDTO;
 
 import jakarta.persistence.Column;
@@ -39,7 +40,7 @@ public class Timesheet {
     public Timesheet(TimesheetDTO TimesheetDTO) {
         BeanUtils.copyProperties(TimesheetDTO, this);
     }
-
+    
     public Timesheet() {
     }
 
