@@ -58,6 +58,12 @@ public class User implements UserDetails {
         this.timesheet = timesheet;
     }
 
+    public User(String login, String password, UserRole userRole) {
+        this.login = login;
+        this.password = password;
+        this.userRole = userRole;
+    }
+
     public Long getId() {
         return id;
     }

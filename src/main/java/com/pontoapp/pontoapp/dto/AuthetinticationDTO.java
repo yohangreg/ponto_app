@@ -1,5 +1,5 @@
 package com.pontoapp.pontoapp.dto;
 
-public record AuthetinticationDTO(String email, String password) {
+public record AuthetinticationDTO(String login, String password) {
     
 }

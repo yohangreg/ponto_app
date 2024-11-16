@@ -85,7 +85,7 @@ public class UserService {
     }
 
     private void validateUser(NewUserDTO user) {
-        if (userRepository.findByLogin(user.getLogin()).isPresent()) {
+        if (userRepository.findByLogin(user.getLogin())!=null) {
             throw new UserServiceException("Usuário já cadastrado: " + user.getLogin());
         }
     }

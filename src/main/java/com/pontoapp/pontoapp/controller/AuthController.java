@@ -1,52 +1,33 @@
 package com.pontoapp.pontoapp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.pontoapp.pontoapp.dto.AcessDTO;
-import com.pontoapp.pontoapp.dto.AuthenticationDTO;
-import com.pontoapp.pontoapp.dto.NewUserDTO;
-import com.pontoapp.pontoapp.service.AuthService;
-import com.pontoapp.pontoapp.service.UserService;
+import com.pontoapp.pontoapp.dto.AuthetinticationDTO;
+import com.pontoapp.pontoapp.dto.RegisterDTO;
+import com.pontoapp.pontoapp.service.AuthorizationService;
+
+import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping(value = "/api/auth")
-@CrossOrigin
+@RequestMapping("api/auth")
 public class AuthController {
-
+   
     @Autowired
-    private AuthService authService;
+    AuthorizationService authorizationService;
 
-    @Autowired
-    private UserService userService;
-
-    @PostMapping(value = "/singUp")
-    public ResponseEntity<?> insertNewUser(@RequestBody NewUserDTO newUser) {
-        try {
-            userService.insert(newUser);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Novo usuário criado!");
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage() + " " + e.getCause());
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage() + " " + e.getCause());
-        }
+    @PostMapping("/login")
+    public ResponseEntity<Object> login(@RequestBody @Valid AuthetinticationDTO authetinticationDto){
+        return authorizationService.login(authetinticationDto);
     }
 
-    @PostMapping(value = "/login")
-    public ResponseEntity<?> login(@RequestBody AuthenticationDTO authDto) {
-        try {
-            AcessDTO token = authService.login(authDto);
-            return ResponseEntity.status(HttpStatus.OK).body(token);
-        } catch (IllegalArgumentException ex) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage() + " " + ex.getCause());
-        } catch (RuntimeException ex) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage() + " " + ex.getCause());
-        }
+
+    @PostMapping("/register")
+    public ResponseEntity<Object> register (@RequestBody RegisterDTO registerDto){
+        return authorizationService.register(registerDto);
     }
 }
