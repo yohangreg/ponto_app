@@ -44,6 +44,11 @@ public class Timesheet {
     public Timesheet() {
     }
 
+    public Timesheet(InsertTimesheetDTO dto) {
+        this.dot = dto.dot();
+        this.timeflag = dto.timeflag();
+    }
+
     public Long getId() {
         return id;
     }

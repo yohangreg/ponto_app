@@ -30,7 +30,6 @@ public class UserService {
             validatePassword(userDTO);
             User user = new User(userDTO);
             user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-            user.setId(null);
             userRepository.save(user);
         } catch (Exception e) {
             throw new UserServiceException("Erro ao criar novo usuário", e);

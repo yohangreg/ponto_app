@@ -30,11 +30,9 @@ public class TimesheetService {
             if(!userOp.isPresent()) {
                 throw new UserServiceException("Usuário não encontrado para o id fornecido: " + dto.userId());
             }
-            Timesheet timesheet = new Timesheet();
-            timesheet.setId(null);
+            Timesheet timesheet = new Timesheet(dto);
             timesheet.setUser(userOp.get());
-            timesheet.setDot(dto.dot());
-            timesheet.setTimeflag(dto.timeflag());
+            timesheet.setId(null);
             timesheetRepository.save(timesheet);
         } catch (RuntimeException e) {
             throw new RuntimeException("Failed to create timesheet", e);
