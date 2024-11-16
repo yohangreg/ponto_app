@@ -1,25 +1,23 @@
 package com.pontoapp.pontoapp.entity;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.pontoapp.pontoapp.dto.NewUserDTO;
 import com.pontoapp.pontoapp.dto.UpdateUserDTO;
 import com.pontoapp.pontoapp.dto.UserDTO;
+import com.pontoapp.pontoapp.enums.UserRole;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements UserDetails {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,6 +31,9 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Timesheet> timesheet;
+
+    @Enumerated
+    private UserRole userRole;
 
     public User(UserDTO userDto) {
         BeanUtils.copyProperties(userDto, this);
@@ -49,10 +50,11 @@ public class User {
     public User() {
     }
 
-    public User(Long id, String login, String password, List<Timesheet> timesheet) {
+    public User(Long id, String login, String password, UserRole userRole, List<Timesheet> timesheet) {
         this.id = id;
         this.login = login;
         this.password = password;
+        this.userRole = userRole;
         this.timesheet = timesheet;
     }
 
@@ -72,6 +74,7 @@ public class User {
         this.login = login;
     }
 
+    @Override
     public String getPassword() {
         return password;
     }
@@ -88,4 +91,42 @@ public class User {
         this.timesheet = timesheet;
     }
 
+    public UserRole getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(UserRole userRole) {
+        this.userRole = userRole;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        if (this.userRole == userRole.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
+        else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    @Override
+    public String getUsername() {
+        return getLogin();
+    }
 }

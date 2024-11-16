@@ -2,25 +2,36 @@ package com.pontoapp.pontoapp.entity;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import com.pontoapp.pontoapp.enums.UserRole;
+
+import jakarta.persistence.Enumerated;
 
 public class UserDetailsImpl implements UserDetails {
 
-    private final Long id;
+    private Long id;
 
-    private final String login;
+    private String login;
 
     private String password;
 
+    @Enumerated
+    private UserRole userRole;
+
     private final Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl(Long id, String login, String password, Collection<? extends GrantedAuthority> authorities) {
+    public UserDetailsImpl(Long id, String login, String password, UserRole userRole,
+                            Collection<? extends GrantedAuthority> authorities) {
         super();
         this.id = id;
         this.login = login;
         this.password = password;
+        this.userRole = userRole;
         this.authorities = authorities;
     }
 
@@ -30,12 +41,14 @@ public class UserDetailsImpl implements UserDetails {
                 user.getId(),
                 user.getLogin(),
                 user.getPassword(),
+                user.getUserRole(),
                 new ArrayList<>());
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
+        if (this.userRole == userRole.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
+        else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
     @Override
@@ -84,11 +97,6 @@ public class UserDetailsImpl implements UserDetails {
     @Override
     public boolean equals(Object obj) {
         return super.equals(obj);
-    }
-
-    @Override
-    protected void finalize() throws Throwable {
-        super.finalize();
     }
 
     @Override
