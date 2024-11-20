@@ -11,14 +11,14 @@ public class TimesheetDTO {
     private Date dot;
 
     private Integer timeflag;
-    
-    private Long user_id;
+
+    private Long userId;
 
     public TimesheetDTO(Timesheet timesheet) {
         this.id = timesheet.getId();
         this.dot = timesheet.getDot();
         this.timeflag = timesheet.getTimeflag();
-        this.user_id = timesheet.getUser().getId();
+        this.userId = timesheet.getUser().getId();
     }
 
     public Long getId() {
@@ -37,12 +37,12 @@ public class TimesheetDTO {
         this.dot = dot;
     }
 
-    public Long getUser_id() {
-        return user_id;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser_id(Long user_id) {
-        this.user_id = user_id;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public Integer getTimeflag() {
@@ -52,5 +52,5 @@ public class TimesheetDTO {
     public void setTimeflag(Integer timeflag) {
         this.timeflag = timeflag;
     }
-    
+
 }

@@ -40,4 +40,9 @@ public class UpdateUserDTO {
         this.password = password;
     }
 
+    public UpdateUserDTO(Long id, String login, String password) {
+        this.id = id;
+        this.login = login;
+        this.password = password;
+    }
 }

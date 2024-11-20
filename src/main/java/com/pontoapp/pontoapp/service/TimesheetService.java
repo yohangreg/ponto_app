@@ -32,7 +32,6 @@ public class TimesheetService {
             }
             Timesheet timesheet = new Timesheet(dto);
             timesheet.setUser(userOp.get());
-            timesheet.setId(null);
             timesheetRepository.save(timesheet);
         } catch (RuntimeException e) {
             throw new RuntimeException("Failed to create timesheet", e);
@@ -54,6 +53,22 @@ public class TimesheetService {
             return new TimesheetDTO(timesheet);
         } catch (RuntimeException e) {
             throw new RuntimeException("Failed to find timesheet", e);
+        }
+    }
+
+    public List<TimesheetDTO> findByUser(Long userId) {
+        try {
+            Optional<User> userOp = userRepository.findById(userId);
+            if(!userOp.isPresent()) {
+                throw new UserServiceException("Usuário não encontrado para o id fornecido: " + userId);
+            }
+            List<Timesheet> timesheets = timesheetRepository.findByUser(userOp.get());
+            if(timesheets.isEmpty()||timesheets==null) {
+                throw new RuntimeException("Nenhum ponto encontrado para o usuário");
+            }
+            return timesheets.stream().map(TimesheetDTO::new).collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to find timesheet for this user", e);
         }
     }
 

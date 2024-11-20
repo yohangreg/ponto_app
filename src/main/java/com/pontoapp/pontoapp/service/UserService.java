@@ -45,6 +45,11 @@ public class UserService {
 
             User updatedUser = existingUser.get();
 
+            // Verifica a senha
+            if (passwordEncoder.matches(updatedUser.getPassword(), userDTO.getPassword())) {
+                throw new UserServiceException("Senha de usuário incorreta: ");
+            }
+
             // Atualiza os campos do usuário com os valores do DTO, exceto a senha
             updatedUser.setLogin(userDTO.getLogin());
             updatedUser.setPassword(userDTO.getPassword());

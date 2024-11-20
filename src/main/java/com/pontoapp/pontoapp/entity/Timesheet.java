@@ -40,7 +40,14 @@ public class Timesheet {
     public Timesheet(TimesheetDTO TimesheetDTO) {
         BeanUtils.copyProperties(TimesheetDTO, this);
     }
-    
+
+    public Timesheet(Long id, Date dot, Integer timeflag, User user) {
+        this.id = id;
+        this.dot = dot;
+        this.timeflag = timeflag;
+        this.user = user;
+    }
+
     public Timesheet() {
     }
 
