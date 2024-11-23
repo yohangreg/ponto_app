@@ -1,6 +1,7 @@
 package com.pontoapp.pontoapp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,12 +23,25 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<Object> login(@RequestBody @Valid AuthetinticationDTO authetinticationDto){
-        return authorizationService.login(authetinticationDto);
+        try {
+            return authorizationService.login(authetinticationDto);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage() + " " + e.getCause());
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage() + " " + e.getCause());
+        }
     }
 
 
     @PostMapping("/register")
     public ResponseEntity<Object> register (@RequestBody RegisterDTO registerDto){
-        return authorizationService.register(registerDto);
+        try {
+            authorizationService.register(registerDto);
+            return ResponseEntity.status(HttpStatus.CREATED).body("Novo usuário criado!");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage() + " " + e.getCause());
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage() + " " + e.getCause());
+        }
     }
 }
