@@ -13,8 +13,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
@@ -38,18 +39,16 @@ public class SecurityConfigurations {
     }
 
     @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:3000") // Origem permitida
-                        .allowedHeaders("Authorization", "Content-Type") // Cabeçalhos permitidos
-                        .exposedHeaders("Authorization") // Cabeçalhos expostos
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Métodos permitidos
-                        .allowCredentials(true); // Permitir credenciais (cookies)
-            }
-        };
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.addAllowedOrigin("http://localhost:3000"); // Permite requisições do frontend
+        configuration.addAllowedHeader("*"); // Permite todos os cabeçalhos
+        configuration.addAllowedMethod("*"); // Permite todos os métodos HTTP
+        configuration.setAllowCredentials(true); // Permite credenciais, como cookies ou Authorization headers
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration); // Aplica a configuração a todas as rotas
+        return source;
     }
 
     @Bean
