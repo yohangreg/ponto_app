@@ -42,7 +42,7 @@ public class SecurityConfigurations {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("(link unavailable)")
+                        .allowedOrigins("http://localhost:3000")
                         .allowedHeaders("Authorization", "Content-Type")
                         .exposedHeaders("Authorization")
                         .allowCredentials(true);
