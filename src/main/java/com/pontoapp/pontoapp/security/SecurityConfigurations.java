@@ -42,14 +42,14 @@ public class SecurityConfigurations {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:3000")
-                        .allowedHeaders("Authorization", "Content-Type")
-                        .exposedHeaders("Authorization")
-                        .allowCredentials(true);
+                        .allowedOrigins("http://localhost:3000") // Origem permitida
+                        .allowedHeaders("Authorization", "Content-Type") // Cabeçalhos permitidos
+                        .exposedHeaders("Authorization") // Cabeçalhos expostos
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Métodos permitidos
+                        .allowCredentials(true); // Permitir credenciais (cookies)
             }
         };
     }
-
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
